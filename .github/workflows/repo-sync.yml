@@ -3,6 +3,7 @@
 # CONCERNS:
 #   - May need to use username:token
 #   - Security issue since under workflows folder
+#   - Trigger on push. Which branch/es?
 
 name: repo-sync
 

@@ -18,3 +18,5 @@ keywords:
 ---
 
 Forget servers, think services instead. This video shows how an App is distributed among multiple decoupled nodes, each one dedicated for a single service.
+
+Add sentence.

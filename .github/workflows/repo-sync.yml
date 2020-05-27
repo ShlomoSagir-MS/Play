@@ -28,6 +28,8 @@ jobs:
       DST_FOLD: play-area-sync/docs
       DST_NAME: play-area-sync
       DST_REPO: https://${{ secrets.DST_ACTOR }}:${{ secrets.DST_TOKEN }}@github.com/${{ secrets.DST_ACTOR }}/play-area-sync.git
+      DST_EMAIL: repo-sync@contoso.com
+      DST_USER: repo-sync
       SRC_FOLD: play-area/docs
       SRC_GH_ACTOR: ${{ secrets.SRC_ACTOR }}
       SRC_GH_TOKEN: ${{ secrets.SRC_TOKEN }}
@@ -50,6 +52,8 @@ jobs:
         run: |
           TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
           cd $DST_NAME
+          git config user.email $DST_EMAIL
+          git config user.name $DST_USER
           git commit -m "repo-sync $TIMESTAMP"
       - name: Push changes
         run:  |

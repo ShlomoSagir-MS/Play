@@ -20,10 +20,10 @@ jobs:
   sync:
     name: Sync
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: $TEMP_DIR
+    #defaults:
+      #run:
+        #shell: bash
+        #working-directory: $TEMP_DIR
     env:
       DST_FOLD: $DST_NAME/docs
       DST_GH_ACTOR: ${{ secrets.DST_ACTOR }}
@@ -35,7 +35,7 @@ jobs:
       SRC_GH_TOKEN: ${{ secrets.SRC_TOKEN }}
       SRC_NAME: play-area
       SRC_REPO: "https://$SRC_GH_ACTOR:$SRC_GH_TOKEN@github.com/shsagir/$SRC_NAME.git"
-      TEMP_DIR: ./repo-sync
+      #TEMP_DIR: ./repo-sync
     steps:
       - name: ENV SRC_REPO
         run: echo $SRC_REPO

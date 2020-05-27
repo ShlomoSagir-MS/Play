@@ -18,18 +18,16 @@ jobs:
   # This workflow contains a single job called "sync"
   sync:
     env:
-      DST_FOLD: $NAME_DST/docs # CONFIRM PATH
+      DST_FOLD: $NAME_DST/docs
       DST_GH_ACTOR: ${{ secrets.DST_ACTOR }}
       DST_GH_TOKEN: ${{ secrets.DST_TOKEN }}
       DST_NAME: play-area-sync
-      DST_REPO: https://$DST_GH_ACTOR:$DST_GH_TOKEN@github.com/shsagir/$DST_NAME.git # UPDATE
-      SRC_FOLD: $NAME_SRC/docs # CONFIRM PATH
+      DST_REPO: https://$DST_GH_ACTOR:$DST_GH_TOKEN@github.com/shsagir/$DST_NAME.git
+      SRC_FOLD: $NAME_SRC/docs
       SRC_GH_ACTOR: ${{ secrets.SRC_ACTOR }}
       SRC_GH_TOKEN: ${{ secrets.SRC_TOKEN }}
       SRC_NAME: play-area
-      SRC_REPO: https://$SRC_GH_ACTOR:$SRC_GH_TOKEN@github.com/shsagir/$SRC_NAME.git # UPDATE
-      # FOLD_SRC: $NAME_SRC/data-explorer/kusto/query/ # CONFIRM PATH
-      # FOLD_DST: $NAME_DST/docs # CONFIRM PATH
+      SRC_REPO: https://$SRC_GH_ACTOR:$SRC_GH_TOKEN@github.com/shsagir/$SRC_NAME.git
       TEMP_DIR: ./repo-sync
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -40,6 +38,9 @@ jobs:
         shell: bash
         working-directory: $TEMP_DIR
         run: |
+          set | grep DST_
+          set | grep SRC_
+          set | grep TEMP_DIR
           git clone $SRC_REPO
           git clone $DST_REPO
           cp -r $SRC_FOLD/* $DST_FOLD
@@ -48,4 +49,3 @@ jobs:
           TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
           git commit -m "repo-sync $TIMESTAMP"
           git push $DST_REPO master
-          cd ../..

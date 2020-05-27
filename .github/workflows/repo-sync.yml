@@ -27,14 +27,12 @@ jobs:
     env:
       DST_FOLD: play-area-sync/docs
       DST_NAME: play-area-sync
-      DST_REPO: https://${{ secrets.DST_ACTOR }}:${{ secrets.DST_TOKEN }}@github.com/${{ secrets.DST_ACTOR }}/play-area-sync.git
+      DST_REPO: https://${{ secrets.DST_ACTOR }}:${{ secrets.DST_TOKEN }}@github.com/shsagir/play-area-sync.git
       DST_EMAIL: repo-sync@contoso.com
       DST_USER: repo-sync
       SRC_FOLD: play-area/docs
-      SRC_GH_ACTOR: ${{ secrets.SRC_ACTOR }}
-      SRC_GH_TOKEN: ${{ secrets.SRC_TOKEN }}
       SRC_NAME: play-area
-      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/${{ secrets.SRC_ACTOR }}/play-area.git
+      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/shsagir/play-area.git
     steps:
       - name: ENV SRC_REPO
         run: echo $SRC_REPO

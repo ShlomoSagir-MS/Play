@@ -30,7 +30,7 @@ jobs:
       SRC_REPO: https://$SRC_GH_ACTOR:$SRC_GH_TOKEN@github.com/shsagir/$SRC_NAME.git # UPDATE
       # FOLD_SRC: $NAME_SRC/data-explorer/kusto/query/ # CONFIRM PATH
       # FOLD_DST: $NAME_DST/docs # CONFIRM PATH
-      TEMP_DIR: repo-syc
+      TEMP_DIR: ./repo-sync
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -40,8 +40,6 @@ jobs:
         shell: bash
         working-directory: $TEMP_DIR
         run: |
-          mkdir $TEMP_DIR
-          cd $TEMP_DIR
           git clone $SRC_REPO
           git clone $DST_REPO
           cp -r $SRC_FOLD/* $DST_FOLD
@@ -51,4 +49,3 @@ jobs:
           git commit -m "repo-sync $TIMESTAMP"
           git push $DST_REPO master
           cd ../..
-          rm -fr $TEMP_DIR

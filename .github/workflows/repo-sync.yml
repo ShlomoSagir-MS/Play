@@ -25,17 +25,14 @@ jobs:
         #shell: bash
         #working-directory: $TEMP_DIR
     env:
-      DST_FOLD: $DST_NAME/docs
-      DST_GH_ACTOR: ${{ secrets.DST_ACTOR }}
-      DST_GH_TOKEN: ${{ secrets.DST_TOKEN }}
+      DST_FOLD: play-area-sync/docs
       DST_NAME: play-area-sync
-      DST_REPO: https://$DST_GH_ACTOR:$DST_GH_TOKEN@github.com/shsagir/${{ env.DST_NAME }}.git
-      SRC_FOLD: $SRC_NAME/docs
+      DST_REPO: https://${{ secrets.DST_ACTOR }}:${{ secrets.DST_TOKEN }}@github.com/${{ secrets.DST_ACTOR }}/play-area-sync.git
+      SRC_FOLD: play-area/docs
       SRC_GH_ACTOR: ${{ secrets.SRC_ACTOR }}
       SRC_GH_TOKEN: ${{ secrets.SRC_TOKEN }}
       SRC_NAME: play-area
-      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/${{ secrets.SRC_ACTOR }}/${{ env.SRC_NAME }}.git
-      #TEMP_DIR: ./repo-sync
+      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/${{ secrets.SRC_ACTOR }}/play-area.git
     steps:
       - name: ENV SRC_REPO
         run: echo $SRC_REPO

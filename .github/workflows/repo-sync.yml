@@ -29,12 +29,12 @@ jobs:
       DST_GH_ACTOR: ${{ secrets.DST_ACTOR }}
       DST_GH_TOKEN: ${{ secrets.DST_TOKEN }}
       DST_NAME: play-area-sync
-      DST_REPO: https://$DST_GH_ACTOR:$DST_GH_TOKEN@github.com/shsagir/$DST_NAME.git
+      DST_REPO: https://$DST_GH_ACTOR:$DST_GH_TOKEN@github.com/shsagir/${{ DST_NAME }}.git
       SRC_FOLD: $SRC_NAME/docs
       SRC_GH_ACTOR: ${{ secrets.SRC_ACTOR }}
       SRC_GH_TOKEN: ${{ secrets.SRC_TOKEN }}
       SRC_NAME: play-area
-      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/${{ secrets.SRC_ACTOR }}/$SRC_NAME.git
+      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/${{ secrets.SRC_ACTOR }}/${{ SRC_NAME }}.git
       #TEMP_DIR: ./repo-sync
     steps:
       - name: ENV SRC_REPO

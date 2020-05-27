@@ -37,6 +37,8 @@ jobs:
       SRC_REPO: "https://$SRC_GH_ACTOR:$SRC_GH_TOKEN@github.com/shsagir/$SRC_NAME.git"
       TEMP_DIR: ./repo-sync
     steps:
+      - name: ENV SRC_REPO
+        run: echo $SRC_REPO
       - name: Clone SRC repo
         run: git clone $SRC_REPO
       - name: Clone DST repo

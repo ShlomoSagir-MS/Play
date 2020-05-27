@@ -40,6 +40,8 @@ jobs:
         shell: bash
         working-directory: $TEMP_DIR
         run: |
+          mkdir $TEMP_DIR
+          cd $TEMP_DIR
           git clone $SRC_REPO
           git clone $DST_REPO
           cp -r $SRC_FOLD/* $DST_FOLD

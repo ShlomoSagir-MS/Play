@@ -3,6 +3,7 @@
 # CONCERNS:
 #   - May need to use username:token
 #   - Security issue since under workflows folder
+#   - Trigger on push. Which branch/es?
 
 name: repo-sync
 
@@ -17,12 +18,16 @@ jobs:
   # This workflow contains a single job called "sync"
   sync:
     env:
-      NAME_SRC: play-area
-      NAME_DST: play-area-sync
-      REPO_SRC: https://github.com/shsagir/$NAME_SRC.git # UPDATE
-      REPO_DST: https://github.com/shsagir/$NAME_DST.git # UPDATE
-      FOLD_SRC: $NAME_SRC/docs # CONFIRM PATH
-      FOLD_DST: $NAME_DST/docs # CONFIRM PATH
+      DST_FOLD: $NAME_DST/docs # CONFIRM PATH
+      DST_GH_ACTOR: ${{ secrets.DST_ACTOR }}
+      DST_GH_TOKEN: ${{ secrets.DST_TOKEN }}
+      DST_NAME: play-area-sync
+      DST_REPO: https://$DST_GH_ACTOR:$DST_GH_TOKEN@github.com/shsagir/$DST_NAME.git # UPDATE
+      SRC_FOLD: $NAME_SRC/docs # CONFIRM PATH
+      SRC_GH_ACTOR: ${{ secrets.SRC_ACTOR }}
+      SRC_GH_TOKEN: ${{ secrets.SRC_TOKEN }}
+      SRC_NAME: play-area
+      SRC_REPO: https://$SRC_GH_ACTOR:$SRC_GH_TOKEN@github.com/shsagir/$SRC_NAME.git # UPDATE
       # FOLD_SRC: $NAME_SRC/data-explorer/kusto/query/ # CONFIRM PATH
       # FOLD_DST: $NAME_DST/docs # CONFIRM PATH
       TEMP_DIR: repo-syc
@@ -31,17 +36,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - id: setup environment
+      - id: repo-sync
         shell: bash
         working-directory: $TEMP_DIR
         run: |
-          git clone $REPO_SRC
-          git clone $REPO_DST
-          cp -r $FOLD_SRC/* $FOLD_DST
-          cd $NAME_DST
+          git clone $SRC_REPO
+          git clone $DST_REPO
+          cp -r $SRC_FOLD/* $DST_FOLD
+          cd $DST_NAME
           git add -A
           TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
           git commit -m "repo-sync $TIMESTAMP"
-          git push
+          git push $DST_REPO master
           cd ../..
           rm -fr $TEMP_DIR

@@ -1,10 +1,9 @@
 # This is a basic workflow to help you get started with Actions
 # 
-# CONCERNS:
-#   - May need to use username:token
-#   - Security issue since under workflows folder
-#   - Trigger on push. Which branch/es?
-#   - Replace env variables and secrets for prod
+# UPDATE:
+#   - Secret keys
+#   - GIT repos
+#   - Folders
 
 name: repo-sync
 
@@ -20,10 +19,6 @@ jobs:
   sync:
     name: Sync
     runs-on: ubuntu-latest
-    #defaults:
-      #run:
-        #shell: bash
-        #working-directory: $TEMP_DIR
     env:
       DST_FOLD: play-area-sync/docs
       DST_NAME: play-area-sync
@@ -34,8 +29,6 @@ jobs:
       SRC_NAME: play-area
       SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/shsagir/play-area.git
     steps:
-      - name: ENV SRC_REPO
-        run: echo $SRC_REPO
       - name: Clone SRC repo
         run: git clone $SRC_REPO
       - name: Clone DST repo

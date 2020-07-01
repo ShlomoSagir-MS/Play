@@ -27,13 +27,15 @@ jobs:
       DST_PATH: doc
       GIT_EMAIL: sync-kql@contoso.com
       GIT_USER: sync-kql
-      TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
     steps:
       - name: Send Teams notification
-        uses: dhollerbach/github-action-send-message-to-ms-teams@1.0.10
+        uses: aliencube/microsoft-teams-actions@v0.8.0
         with:
-          webhook: $TEAMS_WEBHOOK
-          message: Started KQL Repo Sync
+          webhook_uri: ${{ secrets.TEAMS_WEBHOOK }}
+          summary: Started KQL Repo Sync
+          title: TITLE - Started KQL Repo Sync
+          text: TEXT - Started KQL Repo Sync
+          theme_color: 17a2b8
       - name: Clone SRC repo
         run: git clone --depth=1 $SRC_REPO
       - name: Clone DST repo
@@ -56,7 +58,10 @@ jobs:
           cd $DST_ROOT
           git push $DST_REPO master
       - name: Send Teams notification
-        uses: dhollerbach/github-action-send-message-to-ms-teams@1.0.10
+        uses: aliencube/microsoft-teams-actions@v0.8.0
         with:
-          webhook: $TEAMS_WEBHOOK
-          message: Completed KQL Repo Sync
+          webhook_uri: ${{ secrets.TEAMS_WEBHOOK }}
+          summary: Completed KQL Repo Sync
+          title: TITLE - Completed KQL Repo Sync
+          text: TEXT - Completed KQL Repo Sync
+          theme_color: 17a2b8

@@ -29,14 +29,14 @@ jobs:
       GIT_USER: sync-kql
       TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
     steps:
-      - name: Send Teams notification
-        uses: jdcargile/ms-teams-notification@v1.2
-        with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: $TEAMS_WEBHOOK
-          notification-summary: Started KQL Repo Sync
-          notification-color: 007bff
-          timezone: Israel
+      #- name: Send Teams notification
+      #  uses: jdcargile/ms-teams-notification@v1.2
+      #  with:
+      #    github-token: ${{ github.token }}
+      #    ms-teams-webhook-uri: $TEAMS_WEBHOOK
+      #    notification-summary: Started KQL Repo Sync
+      #    notification-color: 007bff
+      #    timezone: Israel
       - name: Clone SRC repo
         run: git clone --depth=1 $SRC_REPO
       - name: Clone DST repo
@@ -54,11 +54,11 @@ jobs:
         run:  |
           cd $DST_ROOT
           git push $DST_REPO master
-      - name: Send Teams notification
-        uses: jdcargile/ms-teams-notification@v1.2
-        with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: $TEAMS_WEBHOOK
-          notification-summary: Completed KQL Repo Sync
-          notification-color: 17a2b8
-          timezone: Israel
+      #- name: Send Teams notification
+      #  uses: jdcargile/ms-teams-notification@v1.2
+      #  with:
+      #    github-token: ${{ github.token }}
+      #    ms-teams-webhook-uri: $TEAMS_WEBHOOK
+      #    notification-summary: Completed KQL Repo Sync
+      #    notification-color: 17a2b8
+      #    timezone: Israel

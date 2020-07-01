@@ -10,8 +10,8 @@ name: repo-sync
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
-    branches: [ master ]
+  schedule:
+    - cron: "0 4 * * 5"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,22 +30,18 @@ jobs:
       SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/shsagir/play-area.git
     steps:
       - name: Clone SRC repo
-        run: git clone $SRC_REPO
+        run: git clone --depth=1 $SRC_REPO
       - name: Clone DST repo
-        run: git clone $DST_REPO
+        run: git clone --depth=1 $DST_REPO
       - name: Copy doc changes
         run: cp -r $SRC_FOLD/* $DST_FOLD
-      - name: Stage changes
-        run: |
-          cd $DST_NAME
-          git add -A
-      - name: Commit changes
+      - name: Stage + Commit changes
         run: |
           TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
           cd $DST_NAME
           git config user.email $DST_EMAIL
           git config user.name $DST_USER
-          git commit -m "repo-sync $TIMESTAMP"
+          git commit -a -m "repo-sync $TIMESTAMP"
       - name: Push changes
         run:  |
           cd $DST_NAME

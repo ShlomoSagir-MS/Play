@@ -53,7 +53,7 @@ jobs:
           cd $DST_ROOT
           git config user.email $GIT_EMAIL
           git config user.name $GIT_USER
-          git commit -m "sync KQL queries [$TIMESTAMP]"
+          git diff-index --quiet HEAD || git commit -m "sync KQL queries [$TIMESTAMP]"
       - name: Push changes
         run:  |
           cd $DST_ROOT

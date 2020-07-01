@@ -10,7 +10,7 @@ name: sync-kql
 # events but only for the master branch
 on:
   schedule:
-    - cron: "*/10 * * * *" # "0 4 * * 5"
+    - cron: "*/5 * * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -27,7 +27,7 @@ jobs:
       DST_PATH: doc
       GIT_EMAIL: sync-kql@contoso.com
       GIT_USER: sync-kql
-      TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
+      # TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
     steps:
       #- name: Send Teams notification
       #  uses: jdcargile/ms-teams-notification@v1.2

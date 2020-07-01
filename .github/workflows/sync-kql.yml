@@ -18,8 +18,8 @@ jobs:
   sync:
     name: Sync KQL
     runs-on: ubuntu-latest
-    #env:
-      #SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/MicrosoftDocs/dataexplorer-docs.git
+    env:
+      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/MicrosoftDocs/dataexplorer-docs.git
       #SRC_ROOT: dataexplorer-docs
       #SRC_PATH: data-explorer/kusto/query
       #DST_REPO: https://${{ secrets.DST_ACTOR }}:${{ secrets.DST_TOKEN }}@github.com/shsagir/Kusto-Query-Language-Replica.git

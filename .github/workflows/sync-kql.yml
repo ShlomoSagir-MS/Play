@@ -43,13 +43,17 @@ jobs:
         run: git clone --depth=1 $DST_REPO
       - name: Copy doc changes
         run: cp -r $SRC_ROOT/$SRC_PATH/* $DST_ROOT/$DST_PATH
-      - name: Stage + Commit changes
+      - name: Stage changes
+        run: |
+          cd $DST_ROOT
+          git add -A
+      - name: Commit changes
         run: |
           TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
           cd $DST_ROOT
           git config user.email $GIT_EMAIL
           git config user.name $GIT_USER
-          git commit -a -m "sync KQL queries [$TIMESTAMP]"
+          git commit -m "sync KQL queries [$TIMESTAMP]"
       - name: Push changes
         run:  |
           cd $DST_ROOT

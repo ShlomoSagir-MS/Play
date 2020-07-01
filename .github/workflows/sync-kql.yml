@@ -1,0 +1,64 @@
+# This workflow syncs between Dataexplorer query docs and Open Source KQL
+# 
+# UPDATE:
+#   - SECRETS
+#   - Folders
+
+name: sync
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  schedule:
+    - cron: "0 4 * * 5"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "sync"
+  sync:
+    name: Sync KQL
+    runs-on: ubuntu-latest
+    env:
+      SRC_REPO: https://${{ secrets.SRC_ACTOR }}:${{ secrets.SRC_TOKEN }}@github.com/MicrosoftDocs/dataexplorer-docs.git
+      SRC_ROOT: dataexplorer-docs
+      SRC_PATH: data-explorer/kusto/query
+      DST_REPO: https://${{ secrets.DST_ACTOR }}:${{ secrets.DST_TOKEN }}@github.com/shsagir/Kusto-Query-Language-Replica.git
+      DST_ROOT: Kusto-Query-Language-Replica
+      DST_PATH: doc
+      GIT_EMAIL: sync-kql@contoso.com
+      GIT_USER: sync-kql
+      TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
+    steps:
+      - name: Send Teams notification
+        uses: toko-bifrost/ms-teams-deploy-card@master
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: $TEAMS_WEBHOOK
+          notification-summary: Started KQL Repo Sync
+          notification-color: 007bff
+          timezone: Israel
+      - name: Clone SRC repo
+        run: git clone --depth=1 $SRC_REPO
+      - name: Clone DST repo
+        run: git clone --depth=1 $DST_REPO
+      - name: Copy doc changes
+        run: cp -r $SRC_ROOT/$SRC_PATH/* $DST_ROOT/$DST_PATH
+      - name: Stage + Commit changes
+        run: |
+          TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
+          cd $DST_ROOT
+          git config user.email $GIT_EMAIL
+          git config user.name $GIT_USER
+          git commit -a -m "sync KQL queries [$TIMESTAMP]"
+      - name: Push changes
+        run:  |
+          cd $DST_ROOT
+          git push $DST_REPO master
+      - name: Send Teams notification
+        uses: toko-bifrost/ms-teams-deploy-card@master
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: $TEAMS_WEBHOOK
+          notification-summary: Completed KQL Repo Sync
+          notification-color: 17a2b8
+          timezone: Israel

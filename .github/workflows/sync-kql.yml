@@ -14,7 +14,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "sync"
+  # This workflow contains a single job called "sync KQL"
   sync:
     name: Sync KQL
     runs-on: ubuntu-latest
@@ -25,8 +25,8 @@ jobs:
       DST_REPO: https://${{ secrets.DST_ACTOR }}:${{ secrets.DST_TOKEN }}@github.com/shsagir/Kusto-Query-Language-Replica.git
       DST_ROOT: Kusto-Query-Language-Replica
       DST_PATH: doc
-      GIT_EMAIL: sync-kql@contoso.com
-      GIT_USER: sync-kql
+      # GIT_EMAIL: sync-kql@contoso.com
+      # GIT_USER: sync-kql
       # TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
     steps:
       #- name: Send Teams notification

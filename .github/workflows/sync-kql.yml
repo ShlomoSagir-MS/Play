@@ -29,40 +29,36 @@ jobs:
       GIT_USER: sync-kql
       TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
     steps:
-      - name: Hello World
-        run: echo "Hello world"
-      - name: Yoohoo
-        run: echo "Yoohoo"
-      #- name: Send Teams notification
-      #  uses: jdcargile/ms-teams-notification@v1.2
-      #  with:
-      #    github-token: ${{ github.token }}
-      #    ms-teams-webhook-uri: $TEAMS_WEBHOOK
-      #    notification-summary: Started KQL Repo Sync
-      #    notification-color: 007bff
-      #    timezone: Israel
-      #- name: Clone SRC repo
-      #  run: git clone --depth=1 $SRC_REPO
-      #- name: Clone DST repo
-      #  run: git clone --depth=1 $DST_REPO
-      #- name: Copy doc changes
-      #  run: cp -r $SRC_ROOT/$SRC_PATH/* $DST_ROOT/$DST_PATH
-      #- name: Stage + Commit changes
-      #  run: |
-      #    TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
-      #    cd $DST_ROOT
-      #    git config user.email $GIT_EMAIL
-      #    git config user.name $GIT_USER
-      #    git commit -a -m "sync KQL queries [$TIMESTAMP]"
-      #- name: Push changes
-      #  run:  |
-      #    cd $DST_ROOT
-      #    git push $DST_REPO master
-      #- name: Send Teams notification
-      #  uses: jdcargile/ms-teams-notification@v1.2
-      #  with:
-      #    github-token: ${{ github.token }}
-      #    ms-teams-webhook-uri: $TEAMS_WEBHOOK
-      #    notification-summary: Completed KQL Repo Sync
-      #    notification-color: 17a2b8
-      #    timezone: Israel
+      - name: Send Teams notification
+        uses: jdcargile/ms-teams-notification@v1.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: $TEAMS_WEBHOOK
+          notification-summary: Started KQL Repo Sync
+          notification-color: 007bff
+          timezone: Israel
+      - name: Clone SRC repo
+        run: git clone --depth=1 $SRC_REPO
+      - name: Clone DST repo
+        run: git clone --depth=1 $DST_REPO
+      - name: Copy doc changes
+        run: cp -r $SRC_ROOT/$SRC_PATH/* $DST_ROOT/$DST_PATH
+      - name: Stage + Commit changes
+        run: |
+          TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
+          cd $DST_ROOT
+          git config user.email $GIT_EMAIL
+          git config user.name $GIT_USER
+          git commit -a -m "sync KQL queries [$TIMESTAMP]"
+      - name: Push changes
+        run:  |
+          cd $DST_ROOT
+          git push $DST_REPO master
+      - name: Send Teams notification
+        uses: jdcargile/ms-teams-notification@v1.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: $TEAMS_WEBHOOK
+          notification-summary: Completed KQL Repo Sync
+          notification-color: 17a2b8
+          timezone: Israel

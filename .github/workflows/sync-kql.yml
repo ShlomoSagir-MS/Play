@@ -30,7 +30,7 @@ jobs:
       TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
     steps:
       - name: Send Teams notification
-        uses: toko-bifrost/ms-teams-deploy-card@master
+        uses: jdcargile/ms-teams-notification@v1.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: $TEAMS_WEBHOOK
@@ -55,7 +55,7 @@ jobs:
           cd $DST_ROOT
           git push $DST_REPO master
       - name: Send Teams notification
-        uses: toko-bifrost/ms-teams-deploy-card@master
+        uses: jdcargile/ms-teams-notification@v1.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: $TEAMS_WEBHOOK

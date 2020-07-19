@@ -45,7 +45,7 @@ jobs:
         # run: cp -r $SRC_ROOT/$SRC_PATH/* $DST_ROOT/$DST_PATH
         run: |
           EXCL="{'$SRC_ROOT/$SRC_PATH/$(echo $EXCLUDE | cut -f1- -d';' --output-delimiter="','$SRC_ROOT/$SRC_PATH/")'}"
-          rsync -rv --exclude $EXCL $SRC_ROOT/$SRC_PATH $DST_ROOT/$DST_PATH/
+          rsync -rv --exclude $EXCL $SRC_ROOT/$SRC_PATH/ $DST_ROOT/$DST_PATH/
       - name: Stage changes
         run: |
           cd $DST_ROOT

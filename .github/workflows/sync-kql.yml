@@ -44,8 +44,8 @@ jobs:
       - name: Copy doc changes
         # run: cp -r $SRC_ROOT/$SRC_PATH/* $DST_ROOT/$DST_PATH
         run: |
-          EXCL="{'$SRC_ROOT/$SRC_PATH/$(echo $EXCLUDE | cut -f1- -d';' --output-delimiter="','$SRC_ROOT/$SRC_PATH/")'}"
-          rsync -rv --exclude $EXCL $SRC_ROOT/$SRC_PATH/ $DST_ROOT/$DST_PATH/
+          echo $EXCLUDE | tr ';' '\n' > excl.txt
+          rsync -rv --exclude-from excl.txt $SRC_ROOT/$SRC_PATH/ $DST_ROOT/$DST_PATH/
       - name: Stage changes
         run: |
           cd $DST_ROOT
